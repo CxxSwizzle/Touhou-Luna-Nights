@@ -12,15 +12,16 @@ state("touhou_luna_nights")
 {
     //addresses go here
     double gameStart : 0xD84AFC, 0x4,0x2C,0x10,0x2E8, 0x0;
+
+    
     /*
     2 - main menu, 3 - file select, 4 - death
     5 - stage 1, 6 - stage 2, 7 - stage 3
     8 - stage 4, 9 - stage 5, 10 - stage 6
     13 - credits 1
     */
-
-    
     int level: 0xD99898;
+    
     int frameRate: 0xD998D4;
     int IGT: 0xCF1604;
 
@@ -146,7 +147,13 @@ init
     //tower id array
     //[0,0,0,0,0,0,0] - INT
     //[1,2,3,4,5,6,7]
-    vars.tower_id = new int[7];
+    vars.towerDeadY = 0;
+    vars.towerDeadP = 0;
+    vars.towerDeadR = 0;
+    vars.towerDeadT = 0;
+    vars.towerDeadS = 0;
+    vars.towerDeadE = 0;
+    vars.towerDeadD = 0;
     //dunk id array
     vars.dunk_id = new int[45];
     //GET ALL THE ROOM IDS
@@ -348,10 +355,10 @@ split
     {
         if(current.level == 5)
         {
-            if(vars.tower_id[0] == 0 && current.towerYellowHP <= 0 && old.towerYellowHP > 0 && old.towerYellowHP < 100)
+            if(vars.towerDeadY == 0 && current.towerYellowHP <= 0 && old.towerYellowHP > 0 && old.towerYellowHP < 100)
             {
                 print("Yellow Tower Destroyed");
-                vars.tower_id[0] = 1;
+                vars.towerDeadY = 1;
                 vars.towers_destroyed++;
                 return true;
             }
@@ -359,57 +366,57 @@ split
         if(current.level == 7)
         {
             
-            if(vars.tower_id[1] == 0 && current.towerPinkHP <= 0 && old.towerPinkHP > 0 && old.towerPinkHP < 100)
+            if(vars.towerDeadP == 0 && current.towerPinkHP <= 0 && old.towerPinkHP > 0 && old.towerPinkHP < 100)
             {
                 print(old.towerPinkHP.ToString());
                 print("Pink Tower Destroyed");
-                vars.tower_id[1] = 1;
+                vars.towerDeadP = 1;
                 vars.towers_destroyed++;
                 return true;
             }
         }
         if(current.level == 9)
         {
-            if(vars.tower_id[2] == 0 && current.towerRedHP <= 0 && old.towerRedHP > 0 && old.towerRedHP < 100)
+            if(vars.towerDeadR == 0 && current.towerRedHP <= 0 && old.towerRedHP > 0 && old.towerRedHP < 100)
             {
                 print(old.towerRedHP.ToString());
                 print("Red Tower Destroyed");
-                vars.tower_id[2] = 1;
+                vars.towerDeadR = 1;
                 vars.towers_destroyed++;
                 return true;
             }
-            if(vars.tower_id[3] == 0 && current.towerTealHP <= 0 && old.towerTealHP > 0 && old.towerTealHP < 100)
+            if(vars.towerDeadT == 0 && current.towerTealHP <= 0 && old.towerTealHP > 0 && old.towerTealHP < 100)
             {
                 print(old.towerTealHP.ToString());
                 print("Teal Tower Destroyed");
-                vars.tower_id[3] = 1;
+                vars.towerDeadT = 1;
                 vars.towers_destroyed++;
                 return true;
             }
         }
         if(current.level == 10)
         {
-            if(vars.tower_id[4] == 0 && current.towerSaphireHP <= 0 && old.towerSaphireHP > 0 && old.towerSaphireHP < 100)
+            if(vars.towerDeadS == 0 && current.towerSaphireHP <= 0 && old.towerSaphireHP > 0 && old.towerSaphireHP < 100)
             {
                 print(old.towerSaphireHP.ToString());
                 print("Saphire Tower Destroyed");
-                vars.tower_id[4] = 1;
+                vars.towerDeadS = 1;
                 vars.towers_destroyed++;
                 return true;
             }
-            if(vars.tower_id[5] == 0 && current.towerEmeraldHP <= 0 && old.towerEmeraldHP > 0 && old.towerEmeraldHP < 100)
+            if(vars.towerDeadE == 0 && current.towerEmeraldHP <= 0 && old.towerEmeraldHP > 0 && old.towerEmeraldHP < 100)
             {
                 print(old.towerEmeraldHP.ToString());
                 print("Emerald Tower Destroyed");
-                vars.tower_id[5] = 1;
+                vars.towerDeadE = 1;
                 vars.towers_destroyed++;
                 return true;
             }
-            if(vars.tower_id[6] == 0 && current.towerDiamondHP <= 0 && old.towerDiamondHP > 0 && old.towerDiamondHP < 100)
+            if(vars.towerDeadD == 0 && current.towerDiamondHP <= 0 && old.towerDiamondHP > 0 && old.towerDiamondHP < 100)
             {
                 print(old.towerDiamondHP.ToString());
                 print("Diamond Tower Destroyed");
-                vars.tower_id[6] = 1;
+                vars.towerDeadD = 1;
                 vars.towers_destroyed++;
                 return true;
             }
@@ -773,10 +780,13 @@ split
 }
 onReset
 {
-    for(int i = 0; i < vars.tower_id.Length; ++i)
-    {
-        vars.tower_id[i] = 0;
-    }
+    vars.towerDeadY = 0;
+    vars.towerDeadP = 0;
+    vars.towerDeadR = 0;
+    vars.towerDeadT = 0;
+    vars.towerDeadS = 0;
+    vars.towerDeadE = 0;
+    vars.towerDeadD = 0;
     vars.dunk_id = 0;
     vars.total_time = 0;
     vars.stopwatch_splits = 0;
