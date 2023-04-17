@@ -1,6 +1,9 @@
 /*************************************
 TOUHOU LUNA NIGHTS AUTO SPLTTER
-ver 1.0
+ver 1.1
+
+Fixed EX NMS Problem
+Added WIP Credits splitting
 
 Usable in Speedruns
 
@@ -132,7 +135,7 @@ startup
     settings.SetToolTip("Boss_Entry", "Check to split on when entering a boss room");
     settings.SetToolTip("Read_Me", "ASL will only work preset run names: Any%, Any% No Major Skips, EX%, EX% No Major Skips, RBO, Dunk%, 100%");
 }
-    `
+    
 init
 {
     /*
