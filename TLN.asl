@@ -118,9 +118,11 @@ startup
     settings.Add("Towers", false, "Towers");
     settings.Add("Dunks", false, "Dunk");
     settings.Add("Keys", false, "Keys");
+    settings.Add("Credits", false, "Credits");
+    settings.SetToolTip("Credits", "WIP - Check to split on entering Non Boss Credits");
     settings.SetToolTip("Keys", "Check to split on KEY pickups");
     settings.SetToolTip("Dunks", "Check to split on a new dunk");
-    settings.SetToolTip("Towers", "Check to split on Jewel Tower destruction");
+    settings.SetToolTip("Towers", "WIP - check to split on Jewel Tower destruction");
     settings.SetToolTip("Skills", "Check to split on new skills");
     settings.SetToolTip("Upgrades", "Check to split on stat upgrades");
     settings.SetToolTip("Abilities", "Check to split on progression items");
@@ -130,7 +132,7 @@ startup
     settings.SetToolTip("Boss_Entry", "Check to split on when entering a boss room");
     settings.SetToolTip("Read_Me", "ASL will only work preset run names: Any%, Any% No Major Skips, EX%, EX% No Major Skips, RBO, Dunk%, 100%");
 }
-    
+    `
 init
 {
     /*
@@ -230,6 +232,7 @@ start
 }
 split
 {
+    
     //update parameters so the game doesn't split on a !new save file
     if(vars.new_file == 1 && current.level != old.level && old.level < 5)
     {
@@ -329,7 +332,9 @@ split
                     vars.final_split = 0;
                     vars.final_dialogue = 0;
                     vars.can_split = 0;
-                    
+                    vars.to_credits = 1;
+                    vars.total_time = 0;
+
                     return false;
                 }
                 //print("Mech");
